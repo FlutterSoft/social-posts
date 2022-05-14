@@ -1,6 +1,6 @@
 const deleteBtns = document.querySelectorAll('.btnDelete')
 const likeBtns = document.querySelectorAll('.btnLike')
-
+console.log(deleteBtns)
 Array.from(deleteBtns).forEach( (element) => {
     element.addEventListener('click', deletePost)
 })
