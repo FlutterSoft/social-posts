@@ -6,7 +6,7 @@ require('dotenv').config()
 
 let db
 let dbConnectionStr = process.env.DB_STRING
-dbName = 'socialposts'
+let dbName = 'socialposts'
 
 MongoClient.connect(dbConnectionStr, {useUnifiedTopology: true})
     .then(client => {
@@ -26,6 +26,38 @@ app.use(express.json())
 app.get('/', async (request, response) => {
     const posts = await db.collection('socialposts').find().toArray()
     response.render('index.ejs', {postsList: posts})
+})
+
+
+app.post('/createPost', async (request, response) => {
+    db.collection('socialposts').insertOne({name: request.body.name, message: request.body.message, likes: 0})
+    .then(result => {
+        console.log('Post added.')
+        response.redirect('/')
+    })
+    .catch(err => console.error(error))
+})
+
+app.put('/like', (request, response) => {
+    db.collection('socialposts').updateOne({name: request.body.name, message: request.body.message},{
+        $set: {
+            likes: Number(request.body.likes +1)
+        }
+    },)
+    .then(result => {
+        console.log('Liked')
+        response.json('Like added')
+    })
+    .catch(error => console.error(error))
+})
+
+app.delete('/delete', (request, response) => {
+    db.collection('socialposts').deleteOne({name: request.body.name, message: request.body.message})
+    .then(result => {
+        console.log('Post deleted')
+        response.json('Post Deleted')
+    })
+    .catch(error => console.error(error))
 })
 
 
