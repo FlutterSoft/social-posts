@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express() 
-const MongoClient = require('mongodb').MongoClient 
+const MongoClient = require('mongodb').MongoClient
 const PORT = 5050
 require('dotenv').config() 
 
@@ -27,6 +27,8 @@ app.get('/', async (request, response) => {
     const posts = await db.collection('socialposts').find().toArray()
     response.render('index.ejs', {postsList: posts})
 })
+
+
 
 
 app.post('/createPost', async (request, response) => {
