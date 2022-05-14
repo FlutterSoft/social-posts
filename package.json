@@ -23,6 +23,10 @@
     "express": "^4.18.1",
     "mongodb": "^4.6.0"
   },
+  "engines": {
+    "node": "16.x",
+    "npm": "8.3.x"
+  },
   "devDependencies": {
     "nodemon": "^2.0.16"
   }
